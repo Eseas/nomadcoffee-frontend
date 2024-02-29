@@ -2,6 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, makeVar } from "@apollo/client";
 
 const TOKEN = "TOKEN";
 const USERNAME = "USERNAME";
+const COFFEESHOP_ID = "COFFEESHOP_ID"
 const DARK_MODE = "DARK_MODE";
 
 export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));

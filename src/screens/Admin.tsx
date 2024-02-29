@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Logofont } from "../components/auth/Logofont";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { DataGrid } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
+import routes from '../routes';
 
 const FINDCOFFEESHOP_QUERY = gql`
   query findMyCoffeeshops($username: String!) {
@@ -18,13 +20,28 @@ const FINDCOFFEESHOP_QUERY = gql`
   }
 `;
 
+function moveEditNavigate() {
+    const navigate = useNavigate();
+    
+    function moveEdit(selectedIds) {
+      if (selectedIds.length === 1) {
+        localStorage.setItem("COFFEESHOP_ID",selectedIds[0]);
+        navigate(`${routes.edit}/${selectedIds[0]}`);
+      } else {
+        console.error("Select exactly one item to edit.");
+      }
+    }
+  
+    return { moveEdit };
+}
+
 function Admin() {
   const username = localStorage.getItem("USERNAME");
 
   const { loading, error, data: coffeeshopsData } = useQuery(FINDCOFFEESHOP_QUERY, {
     variables: { username: username },
   });
-  
+  const { moveEdit } = moveEditNavigate();
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 130 },
@@ -36,7 +53,7 @@ function Admin() {
   ];
 
   const rows = coffeeshopsData?.findMyCoffeeshops?.Shops || [];
-
+  const [selectedIds, setSelectedIds] = useState([]);
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -44,8 +61,13 @@ function Admin() {
       <Logofont>
         <p>𝓷𝓸𝓶𝓪𝓭 𝓬𝓸𝓯𝓯𝓮𝓮</p>
       </Logofont>
+      <button onClick={() => moveEdit(selectedIds)}>Edit</button>
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid rows={rows} columns={columns} checkboxSelection />
+        <DataGrid rows={rows} columns={columns} checkboxSelection
+            onRowSelectionModelChange={(newSelectedIds) => {
+                setSelectedIds(newSelectedIds);
+            }}
+        />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import SignUp from "./screens/SignUp";
 import routes from "./routes";
 import { HelmetProvider } from "react-helmet-async";
 import Admin from "./screens/Admin";
+import Add from "./screens/add";
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
             <Route path={routes.signUp} element={<SignUp />} />
           ) : null}
           <Route path={`${routes.admin}/${localStorage.getItem("USERNAME")}`} element={<Admin />}>
+          </Route>
+          <Route path={`${routes.add}/${localStorage.getItem("USERNAME")}`} element={<Add />}>
           </Route>
           <Route path="*" element={
             <NotFound />
