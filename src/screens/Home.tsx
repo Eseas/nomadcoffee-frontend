@@ -40,12 +40,11 @@ function useAdminNavigation() {
 
 function Home() {
     const { moveAdmin } = useAdminNavigation();
-    const [selectedRows, setSelectedRows] = React.useState([]);
     const page = 1;
     const { loading, error, data } = useQuery(SeeCoffeeShops_Query, {
         variables: { page },
     });
-    console.log(data);
+    //console.log(data);
 
     const columns = [
         { field: "id", headerName: "ID", width: 70 },
@@ -64,14 +63,6 @@ function Home() {
             </div>
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid rows={data} columns={columns} />
-                onRowSelectionModelChange={(ids) => {
-                const selectedIDs = new Set(ids);
-                const selectedRows = data.rows.filter((row) =>
-                selectedIDs.has(row.id),
-                );
-                setSelectedRows(selectedRows);
-                }}
-                {...data}
             </div>
         </div>
         </form>

@@ -136,6 +136,7 @@ function Edit() {
                 required: "latitude is Required"
             })}
             name="latitude"
+            value={CoffeeShop_data.latitude}
             type="text"
             placeholder="latitude"
           />
@@ -144,6 +145,7 @@ function Edit() {
             required: "logitude is Required"
           })}
             name="logitude"
+            value={CoffeeShop_data.logitude}
             type="text"
             placeholder="logitude"
           />
@@ -152,6 +154,7 @@ function Edit() {
             required: "category is Required"
           })}
             name="category"
+            value={CoffeeShop_data.categories.name}
             type="text"
             placeholder="category"
           />
