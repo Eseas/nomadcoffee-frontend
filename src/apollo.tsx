@@ -30,7 +30,11 @@ export const disableDarkmode = () => {
     darkModeVar(false)
 }
 
-const httpLink = new HttpLink({uri: 'http://localhost:4000/graphql'});
+const httpLink = new HttpLink({
+    uri: 
+    process.env.NODE_ENV === "production"
+        ? "https://nomadcoffee-backend-szdn.onrender.com" 
+        : 'http://localhost:4000/graphql'});
 export const client = new ApolloClient({
     //uri: "http://localhost:4000/graphql",
     link: httpLink,

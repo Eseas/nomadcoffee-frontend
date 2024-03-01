@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import routes from '../routes';
 
-const FINDCOFFEESHOP_QUERY = gql`
+const FINDCOFFEESHOPS_QUERY = gql`
   query findMyCoffeeshops($username: String!) {
     findMyCoffeeshops(username: $username) {
       Shops {
@@ -20,7 +20,7 @@ const FINDCOFFEESHOP_QUERY = gql`
   }
 `;
 
-function moveEditNavigate() {
+function MoveEditNavigate() {
     const navigate = useNavigate();
     
     function moveEdit(selectedIds) {
@@ -38,10 +38,10 @@ function moveEditNavigate() {
 function Admin() {
   const username = localStorage.getItem("USERNAME");
 
-  const { loading, error, data: coffeeshopsData } = useQuery(FINDCOFFEESHOP_QUERY, {
+  const { loading, error, data: coffeeshopsData } = useQuery(FINDCOFFEESHOPS_QUERY, {
     variables: { username: username },
   });
-  const { moveEdit } = moveEditNavigate();
+  const { moveEdit } = MoveEditNavigate();
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 130 },
